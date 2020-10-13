@@ -81,8 +81,8 @@ def getStockData(ticker):
 if __name__ == "__main__":
     THREAD_NO=200
     tickers = si.tickers_sp500()
-    # tickers.extend(si.tickers_nasdaq())
-    # tickers = list(dict.fromkeys(tickers))
+    tickers.extend(si.tickers_nasdaq())
+    tickers = list(dict.fromkeys(tickers))
     df_screened = pd.DataFrame(columns=['Stock','Earnings Count', "Percent Positive","Percent Negative", "Days Before ER", "AVG Delta", "Max Delta", "Worst Delta"])
     threads_start = time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=THREAD_NO) as executor:
@@ -92,4 +92,4 @@ if __name__ == "__main__":
                 df_screened = df_screened.append(result, ignore_index=True)
     print("With threads time:", time.time() - threads_start)
     print(df_screened)
-    # df_screened.to_csv(r'14DaysNas_and_SP500_pre_ER.csv')
+    df_screened.to_csv(r'14DaysNas_and_SP500_pre_ER.csv')
